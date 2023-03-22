@@ -66,7 +66,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           mCustomer = newest.map((model) => MetaDataResponse.fromJson(model)).toList();
           appStore.setFirstName(res['first_name']);
           appStore.setLastName(res['last_name']);
-
           mCustomer.forEachIndexed((element, index) {
             if (element.key == "iqonic_profile_image") {
               if (mCustomer.isNotEmpty) {

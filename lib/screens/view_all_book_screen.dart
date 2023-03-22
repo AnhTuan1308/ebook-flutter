@@ -244,7 +244,6 @@ class _ViewAllBooksScreenState extends State<ViewAllBooksScreen> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           Color bgColor = bookBackgroundColor[index % bookBackgroundColor.length];
-
                           DashboardBookInfo mData = mBookList[index];
                           var categoryName;
                           mData.categories.validate().forEach((element) {

@@ -5,6 +5,7 @@ import 'package:flutterapp/screens/author_list_screen.dart';
 import 'package:flutterapp/screens/category_list_screen.dart';
 import 'package:flutterapp/screens/change_password_screen.dart';
 import 'package:flutterapp/screens/default_setting_screen.dart';
+import 'package:flutterapp/screens/department_list_screen.dart';
 import 'package:flutterapp/screens/edit_profile_screen.dart';
 import 'package:flutterapp/screens/my_bookmark_screen.dart';
 import 'package:flutterapp/screens/my_cart_screen.dart';
@@ -25,7 +26,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStateMixin {
-  String userImage = "";
+  String userImage = "https://secure.gravatar.com/avatar/4e838b59bfff152199fcc9bc3b4aa02e?s=96&d=mm&r=g";
 
   @override
   void initState() {
@@ -34,11 +35,7 @@ class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStat
   }
 
   getUserDetails() async {
-    if (appStore.profileImage.isNotEmpty) {
-      userImage = appStore.profileImage;
-    } else {
-      userImage = appStore.avatar;
-    }
+    userImage;
     setState(() {});
   }
 
@@ -60,7 +57,7 @@ class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStat
                 leading: CircleAvatar(backgroundImage: NetworkImage(userImage), radius: context.width() * 0.07),
                 title: appStore.VietJetusername.validate(),
                 titleTextStyle: boldTextStyle(size: 22),
-                subTitle: appStore.userEmail.validate(),
+                subTitle: appStore.VietJetusername.validate(),
                 decoration: BoxDecoration(borderRadius: radius()),
                 onTap: () {
                   EditProfileScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Slide).whenComplete(getUserDetails);
@@ -137,9 +134,20 @@ class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStat
                   CategoriesListScreen(isShowBack: true).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
                 },
               ),
+                SettingItemWidget(
+                padding: EdgeInsets.all(16),
+                title: keyString(context, 'lbl_department')!,
+                titleTextStyle: primaryTextStyle(size: 18),
+                decoration: BoxDecoration(borderRadius: radius()),
+                onTap: () {
+                  DepartmentListScreen().launch(context);
+                    },
+              ),
+              Divider(color: Colors.grey).visible(appStore.isLoggedIn),
+              Text(keyString(context, 'lbl_favorite_books')!, style: boldTextStyle(size: 14)).paddingOnly(left: 16, right: 16, top: 8).visible(appStore.isLoggedIn),
               SettingItemWidget(
                 padding: EdgeInsets.all(16),
-                title: keyString(context, 'lbl_my_bookmark')!,
+                title: keyString(context, 'lbl_my_favorite_books')!,
                 titleTextStyle: primaryTextStyle(size: 18),
                 decoration: BoxDecoration(borderRadius: radius()),
                 onTap: () {

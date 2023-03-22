@@ -47,7 +47,6 @@ class BookDescriptionComponentState extends State<BookDescriptionComponent> {
   List<DashboardBookInfo>? BookMarkList;
   @override
   void initState() {
-    getAllBookMark();
     super.initState();
     init();
     }
@@ -58,6 +57,9 @@ class BookDescriptionComponentState extends State<BookDescriptionComponent> {
     //     checkVisible = true;
     //   }
     // });
+    if(appStore.isLoggedIn){
+          getAllBookMark();
+    }
     mBookList.forEach((element) {
       if(element.bookID == widget.mBookId.toInt()){
        isborrow = true;
@@ -82,7 +84,6 @@ class BookDescriptionComponentState extends State<BookDescriptionComponent> {
     });
     await isNetworkAvailable().then((bool) async {
       if (bool) {
-        print("hello");
         await getRemoveFromBookmarkRestApi(widget.mBookId)
         // .then((res) async {
           // AddToBookmarkResponse response = AddToBookmarkResponse.fromJson(res);

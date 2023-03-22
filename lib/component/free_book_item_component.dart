@@ -21,7 +21,7 @@ class FreeBookItemComponent extends StatefulWidget {
   final Function? onCancelRequest;
   final bool? isHistory;
   final bool? isExtend;
-  FreeBookItemComponent({this.requestDetail, this.bgColor,this.onCancelRequest,this.isHistory = false,this.isExtend});
+  FreeBookItemComponent({this.requestDetail, this.bgColor,this.onCancelRequest,this.isHistory = false,this.isExtend = false});
 
   @override
   FreeBookItemComponentState createState() => FreeBookItemComponentState();
@@ -130,8 +130,8 @@ class FreeBookItemComponentState extends State<FreeBookItemComponent> {
               onTap: () {
                 widget.onCancelRequest!.call(widget.requestDetail!.id);
               },
-            ).center(heightFactor: 2.5).visible(widget.requestDetail!.status == "Pending").visible(!widget.isHistory!),
-                      InkWell(
+            ).center(heightFactor: 2.5).visible(widget.requestDetail!.status == "Pending").visible(!widget.isExtend!),
+            InkWell(
               child: Container(
                 height: 40,
                 width: 40,

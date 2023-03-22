@@ -99,6 +99,17 @@ Future logout(BuildContext context) async {
     await appStore.setLoggedIn(false);
     await appStore.setProfileImage('');
     await appStore.setSocialLogin(false);
+          await appStore.setVietJetUserId("");
+          await appStore.setVietJetUserName("");
+          // await appStore.setVietJetFullName(data.userfullName!);
+          await appStore.setVietJetSysToken("");
+          await appStore.setVietJetSysTokenExpires(0);
+          await appStore.setVietJetVolToken("");
+          await appStore.setVietJetVolTokenExpires(0);
+          await appStore.setVietJetRefreshToken("");
+          await appStore.setVietJetRefreshTokenExpires(0);
+          // await appStore.setVietJetRoles(data.roles!);
+          // await appStore.setVietJetPermisssions(data.permisssions!);
     myCartList.clear();
     appStore.cartCount = [];
     DashboardScreen().launch(context, isNewTask: true);

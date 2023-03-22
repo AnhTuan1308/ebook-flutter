@@ -8,16 +8,34 @@ class Extensions {
    int? id;
    String? createdAt;
    BorrowRequestData? request;
+   int? bookBorrowID;
+   String? status;
+   String? extendedReturnDate;
+   String? previousExtendedReturnDate;
+   List<Notes>? note;
    Extensions ({
     this.id,
     this.createdAt,
     this.request,
+    this.bookBorrowID,
+    this.status,
+    this.extendedReturnDate,
+    this.previousExtendedReturnDate,
+    this.note,
    });
     Extensions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     createdAt = json['createdAt'];
     request =  json['bookBorrow'] != null ? new BorrowRequestData.fromJson(json['bookBorrow']) : null;
-
+    status = json['status'];
+    extendedReturnDate = json['extendedReturnDate'];
+    previousExtendedReturnDate = json['previousExtendedReturnDate'];
+    if (json['notes'] != null) {
+      note = <Notes>[];
+      json['notes'].forEach((v) {
+        note!.add(new Notes.fromJson(v));
+      });
+    }
   }
 
     Map<String, dynamic> toJson() {

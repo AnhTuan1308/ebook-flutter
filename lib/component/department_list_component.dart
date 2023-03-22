@@ -1,16 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/model/AuthorListResponse.dart';
+import 'package:flutterapp/model/DepartmentResponse.dart';
 import 'package:flutterapp/utils/app_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';
 
-class AuthorListComponent extends StatelessWidget {
-  final Author? authorDetails;
+class DepartmentListComponent extends StatelessWidget {
+  final DepartmentData? departmentdetail;
   final Color? bgColor;
 
-  AuthorListComponent(this.authorDetails, this.bgColor);
+  DepartmentListComponent({this.departmentdetail, this.bgColor});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class AuthorListComponent extends StatelessWidget {
               placeholder: (context, url) => Center(child: bookLoaderWidget),
               width: 70,
               height: 70,
-              imageUrl: "https://secure.gravatar.com/avatar/4e838b59bfff152199fcc9bc3b4aa02e?s=96&d=mm&r=g",
+              imageUrl: "https://w7.pngwing.com/pngs/44/599/png-transparent-building-computer-icons-library-school-building-icon-emblem-text-logo.png",
               fit: BoxFit.cover,
             ).cornerRadiusWithClipRRect(6)),
         16.width,
@@ -34,16 +35,17 @@ class AuthorListComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              authorDetails!.fullName.toString(),
+              departmentdetail!.code.toString(),
               textAlign: TextAlign.start,
               style: boldTextStyle(color: appStore.appTextPrimaryColor, size: 18),
             ),
-            // Text(
-            //   authorDetails!..toString(),
-            //   textAlign: TextAlign.start,
-            //   maxLines: 1,
-            //   style: secondaryTextStyle(color: appStore.textSecondaryColor),
-            // ),
+            8.height,
+            Text(
+              departmentdetail!.name.toString(),
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              style: secondaryTextStyle(color: appStore.textSecondaryColor,size: 18),
+            ),
           ],
         ),
       ],

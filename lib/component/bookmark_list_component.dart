@@ -11,8 +11,8 @@ class BookMarkListComponent extends StatefulWidget {
   static String tag = '/BookmarkBookList';
   final DashboardBookInfo? bookData;
   final Color? borderColor;
-
-  BookMarkListComponent(this.bookData, {this.borderColor});
+  final Function? onRemoveBookmark;
+  BookMarkListComponent(this.bookData, {this.onRemoveBookmark,this.borderColor});
 
   @override
   BookMarkListComponentState createState() => BookMarkListComponentState();
@@ -67,18 +67,47 @@ class BookMarkListComponentState extends State<BookMarkListComponent> {
           borderRadius: BorderRadius.circular(10),
         ),
         16.width,
-        Column(
+        Container(
+          width: 250,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.bookData!.title.validate(), style: boldTextStyle(size: 16,weight: FontWeight.bold),maxLines: 1,),
+              8.height,
+              Container(
+                      width: 80,
+                      height: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(30)),
+                      child: Text(
+                          "${widget.bookData!.authors![0].fullName.toString()}",
+                              style: primaryTextStyle(color: white,),maxLines: 1,textAlign: TextAlign.center,
+                          ),
+              ),
+              10.height,
+              Text("${widget.bookData!.publishYear.toString()}", style: boldTextStyle(size: 14,weight: FontWeight.bold),maxLines: 1,).paddingLeft(5),
+
+            ],
+          ),
+        ),
+                Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.bookData!.title.validate(), style: boldTextStyle(size: 16,weight: FontWeight.bold),maxLines: 1,),
-            8.height,
-            Text("Author : ${widget.bookData!.authors![0].fullName.toString()}", style: boldTextStyle(size: 16,weight: FontWeight.normal),maxLines: 1,),
-            Text("Publisher : ${widget.bookData!.publisher!.name.toString()}", style: boldTextStyle(size: 16,weight: FontWeight.normal),maxLines: 1,),
-            Text("PublishYear : ${widget.bookData!.publishYear.toString()}", style: boldTextStyle(size: 16,weight: FontWeight.normal),maxLines: 1,),
-            // Text(keyString(context, 'lbl_free')!, style: boldTextStyle(color: Colors.green)).visible(mIsFreeBook),
-            // salePriceWidget(salePrice: widget.bookData!.salePrice.validate(), regularPrice: widget.bookData!.regularPrice.validate()).visible(
-            //   widget.bookData!.regularPrice.toString().isNotEmpty || widget.bookData!.salePrice.toString().isNotEmpty,
-            // )
+            InkWell(
+              child: Container(
+                height: 40,
+                width: 40,
+                alignment: Alignment.center,
+                decoration: boxDecorationDefault(shape: BoxShape.circle, color: Colors.white),
+                child: Icon(Icons.delete, color: Colors.red),
+              ),
+              onTap: () {
+                widget.onRemoveBookmark!.call(widget.bookData!.id);
+                setState(() {
+
+                });
+              },
+            ).center(heightFactor: 2.5,widthFactor: 2.5),
           ],
         ),
       ],

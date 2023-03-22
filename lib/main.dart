@@ -105,29 +105,28 @@ Future<void> initMethod() async {
   }
 
   
-  await appStore.setUserName(getStringAsync(USERNAME));
-  await appStore.setToken(getStringAsync(TOKEN));
-  await appStore.setFirstName(getStringAsync(FIRST_NAME));
-  await appStore.setLastName(getStringAsync(LAST_NAME));
-  await appStore.setDisplayName(getStringAsync(USER_DISPLAY_NAME));
-  await appStore.setUserId(getIntAsync(USER_ID));
+  // await appStore.setUserName(getStringAsync(USERNAME));
+  // await appStore.setToken(getStringAsync(TOKEN));
+  // await appStore.setFirstName(getStringAsync(FIRST_NAME));
+  // await appStore.setLastName(getStringAsync(LAST_NAME));
+  // await appStore.setDisplayName(getStringAsync(USER_DISPLAY_NAME));
+  // await appStore.setUserId(getIntAsync(USER_ID));
   await appStore.setUserEmail(getStringAsync(USER_EMAIL));
   await appStore.setAvatar(getStringAsync(AVATAR));
-  await appStore.setFirstTime(getBoolAsync(IS_FIRST_TIME));
+  // await appStore.setFirstTime(getBoolAsync(IS_FIRST_TIME));
   await appStore.setLoggedIn(getBoolAsync(IS_LOGGED_IN));
   await appStore.setProfileImage(getStringAsync(PROFILE_IMAGE));
   await appStore.setPassword(getStringAsync(PASSWORD));
-  await appStore.setSocialLogin(getBoolAsync(IS_SOCIAL_LOGIN));
-  await appStore.setTokenExpired(getBoolAsync(TOKEN_EXPIRED));
+  // await appStore.setSocialLogin(getBoolAsync(IS_SOCIAL_LOGIN));
+  // await appStore.setTokenExpired(getBoolAsync(TOKEN_EXPIRED));
 
   // VietJEt Data
-
+          checkLogin();
           await appStore.setVietJetUserId(getStringAsync(VIETJET_USER_ID));
           await appStore.setVietJetUserName(getStringAsync(VIETJET_USER_NAME));
           await appStore.setVietJetFullName(getStringAsync(VIETJET_FULL_NAME));
           await appStore.setVietJetSysToken(getStringAsync(VIETJET_TOKEN));
           await appStore.setVietJetSysTokenExpires(getIntAsync(VIETJET_TOKEN_EXPIRES));
-          checkLogin();
           await appStore.setVietJetVolToken(getStringAsync(VIETJET_VOL_TOKEN));
           await appStore.setVietJetVolTokenExpires(getIntAsync(VIETJET_REFRESH_TOKEN_EXPIRES));
           await appStore.setVietJetRefreshToken(getStringAsync(VIETJET_REFRESH_TOKEN));

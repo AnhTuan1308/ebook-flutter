@@ -74,20 +74,17 @@ class _SignInScreenState extends State<SignInScreen> {
     await isNetworkAvailable().then((bool) async {
       if (bool) {
         appStore.setLoading(true);
-        await getLoginUserRestApi(request).then((res) async {
-          LoginResponse response = LoginResponse.fromJson(res);
-          await appStore.setToken(response.token!);
-          await appStore.setUserName(response.userNicename!);
-          await appStore.setLastName(response.lastName!);
-          await appStore.setUserId(response.userId!);
-          await appStore.setUserEmail(response.userEmail!);
-          await appStore.setAvatar(response.avatar!);
-          
-
-          
+        // await getLoginUserRestApi(request).then((res) async {
+          // LoginResponse response = LoginResponse.fromJson(res);
+        //   await appStore.setToken(response.token!);
+        //   await appStore.setUserName(response.userNicename!);
+        //   await appStore.setLastName(response.lastName!);
+        //   await appStore.setUserId(response.userId!);
+        //   await appStore.setUserEmail(response.userEmail!);
+        //   await appStore.setAvatar(response.avatar!);
         // Real Login
-        var realrequest = {"username": "adminlib", "password": "password123@"};
-        await getVietJetLoginUserRestApi(realrequest).then((responsedata) async {
+        // var realrequest = {"username": "adminlib", "password": "password123@"};
+        await getVietJetLoginUserRestApi(request).then((responsedata) async {
           LoginResponseData loginResponseData = LoginResponseData.fromJson(responsedata);
           LoginData data = loginResponseData.data!;
           await appStore.setVietJetUserId(data.userID!);
@@ -101,13 +98,8 @@ class _SignInScreenState extends State<SignInScreen> {
           await appStore.setVietJetRefreshTokenExpires(data.refreshTokenExpires!);
           await appStore.setVietJetRoles(data.roles!);
           await appStore.setVietJetPermisssions(data.permisssions!);
-        });
+        // });
         // Real Login
-
-
-          if (response.profileImage != null) {
-            appStore.setProfileImage(response.profileImage!);
-          }
           setValue(REMEMBER_PASSWORD, isRemember!);
           await appStore.setPassword(passwordCont.text.toString());
           if (isRemember!) {
@@ -115,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
           } else {
             setValue(EMAIL, '');
           }
-          await appStore.setDisplayName(response.userDisplayName!);
+          await appStore.setDisplayName(data.username!);
           await appStore.setLoggedIn(true);
           appStore.setLoading(false);
           DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
@@ -292,7 +284,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     autoFocus: false,
                                     focus: userNameFocusNode,
                                     nextFocus: passwordFocusNode,
-                                    textFieldType: TextFieldType.EMAIL,
+                                    textFieldType: TextFieldType.USERNAME,
                                     decoration: InputDecoration(
                                       hintText: keyString(context, "hint_enter_email"),
                                       hintStyle: TextStyle(color: Colors.grey),
@@ -366,18 +358,20 @@ class _SignInScreenState extends State<SignInScreen> {
                             });
                           },
                         ),
-                        50.height,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(keyString(context, "lbl_don_t_have_an_account")!, style: primaryTextStyle()),
-                            16.width,
+                            4.width,
                             Text(keyString(context, 'lbl_contact_your_administrator')!, style: primaryTextStyle(color: PRIMARY_COLOR)),
 
                           ],
-                        ),
-                        70.height,
-                        Text(packageInfo.versionName.toString(), style: secondaryTextStyle(size: 15)).center(),
+                        ).center(heightFactor: 6),
+                      Container(
+                      decoration: boxDecorationWithRoundedCorners(borderRadius: BorderRadius.circular(defaultRadius)),
+                      child: Image.asset("main_logo.png", width: 60, height: 60, fit: BoxFit.cover),
+                    ).center(),
+                        Text(packageInfo.versionName.toString(), style: secondaryTextStyle(size: 15)).center(heightFactor: 1),
 
                       ],
                     ),

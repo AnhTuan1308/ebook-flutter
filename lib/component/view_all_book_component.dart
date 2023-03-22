@@ -56,6 +56,17 @@ class ViewAllBookComponentState extends State<ViewAllBookComponent> {
 
   @override
   Widget build(BuildContext context) {
+    var language = "";
+    switch(widget.bookData!.language) {
+      case "vi" : {
+        language = "Vietnamese";
+        break;
+      }
+      case "en": {
+        language = "English";
+        break;
+      }
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,8 +77,8 @@ class ViewAllBookComponentState extends State<ViewAllBookComponent> {
             ),
             imageUrl: widget.bookData!.thumbnailUrl.validate(),
             fit: BoxFit.cover,
-            height: 100,
-            width: 80,
+            height: 120,
+            width: 90,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -76,23 +87,32 @@ class ViewAllBookComponentState extends State<ViewAllBookComponent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.bookData!.title.validate(), style: boldTextStyle()),
-            4.height,
-            Text( widget.bookData!.numPages!.toString()),
             8.height,
             Html(
-              data: widget.bookData!.language!.toString(),
+              data: language,
               style: {
-                "body": Style(fontSize: FontSize(12), color: appStore.appTextPrimaryColor, margin: Margins.zero, padding: EdgeInsets.zero),
+                "body": Style(fontSize: FontSize(15), color: appStore.appTextPrimaryColor, margin: Margins.zero, padding: EdgeInsets.zero),
               },
-            ),
-            Text(keyString(context, 'lbl_free')!, style: boldTextStyle(color: Colors.green)).visible(mIsFreeBook),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.bookData!.publishYear!.toString(), style: boldTextStyle()).visible(widget.bookData!.publishYear!.toString().isNotEmpty),
-                16.width.visible(widget.bookData!.publishYear!.toString().isNotEmpty),
-              ],
-            ).visible(widget.bookData!.publishYear!.toString().isNotEmpty || widget.bookData!.publishYear!.toString().isNotEmpty)
+            ).paddingLeft(5),
+            8.height,
+                        Container(
+                      width: 85,
+                      height: 30,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(30)),
+                      child: Text(
+                          "${widget.bookData!.authors![0].fullName}",
+                              style: primaryTextStyle(color: white,),maxLines: 1,textAlign: TextAlign.center,
+              ),
+              ),
+            8.height,
+            // Row(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text(widget.bookData!.publishYear!.toString(), style: boldTextStyle()).visible(widget.bookData!.publishYear!.toString().isNotEmpty),
+            //     16.width.visible(widget.bookData!.publishYear!.toString().isNotEmpty),
+            //   ],
+            // ).visible(widget.bookData!.publishYear!.toString().isNotEmpty || widget.bookData!.publishYear!.toString().isNotEmpty).paddingLeft(5)
           ],
         ).expand()
       ],

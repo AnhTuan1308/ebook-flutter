@@ -164,14 +164,7 @@ class _BookStoreViewState extends State<BookStoreView> {
                       automaticallyImplyLeading: false,
                       backgroundColor: innerBoxIsScrolled ? appStore.scaffoldBackground : appStore.scaffoldBackground,
                       actions: [
-                        appStore.profileImage.isNotEmpty
-                            ? CircleAvatar(
-                                backgroundImage: NetworkImage(appStore.profileImage),
-                                radius: context.width() * 0.05,
-                              ).paddingOnly(right: 16).onTap(() {
-                                ProfileView().launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
-                              })
-                            : IconButton(
+                         IconButton(
                                 onPressed: () {
                                   ProfileView().launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
                                 },
@@ -179,7 +172,7 @@ class _BookStoreViewState extends State<BookStoreView> {
                               )
                       ],
                       title: Text(
-                        keyString(context, "lbl_hello")! + ' ' + (appStore.userName.isEmpty ? keyString(context, "lbl_guest")! : appStore.userName),
+                        keyString(context, "lbl_hello")! + ' ' + (appStore.VietJetusername.isEmpty ? keyString(context, "lbl_guest")! : appStore.VietJetusername.toString()),
                         style: boldTextStyle(color: appStore.appTextPrimaryColor),
                       ).visible(mNewestBookModel.isNotEmpty && innerBoxIsScrolled),
                     )
@@ -195,7 +188,7 @@ class _BookStoreViewState extends State<BookStoreView> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            titleSilverAppBarWidget(context, title1: keyString(context, "lbl_hello")!, title2: appStore.userName.isEmpty ? keyString(context, "lbl_guest")! : appStore.userName, isHome: true),
+                            titleSilverAppBarWidget(context, title1: keyString(context, "lbl_hello")!, title2: appStore.VietJetusername.isEmpty ? keyString(context, "lbl_guest")! : appStore.VietJetusername.toString(), isHome: true),
                             16.height,
                             Text(
                               keyString(context, "book_store_desc")!,

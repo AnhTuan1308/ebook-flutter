@@ -33,7 +33,7 @@ class MyCartScreen extends StatefulWidget {
 }
 
 class _MyCartScreenState extends State<MyCartScreen> {
-
+  bool mIsLoading = false;
   var listRequest = <BorrowRequestData>[];
   var listRequestEx = <BorrowRequestData>[];
   var status = "";
@@ -53,27 +53,25 @@ class _MyCartScreenState extends State<MyCartScreen> {
   }
 
   Future<void> getCartItem() async {
-        setState(() {
-        appStore.setLoading(true);
+    setState(() {
+        mIsLoading = true;
     });
   
     await getVietJetBorrowRequestRestAPI(appStore.VietJetuserId, status).then((res) {
             BorrowRequestResponse response = BorrowRequestResponse.fromJson(res);
             listRequest = response.data!;
-            appStore.setLoading(false);
               setState(() {
+
+                mIsLoading = false;
           });
     }).catchError((onError) {
         setState(() {
-            appStore.setLoading(false);
+            mIsLoading = false;
           });
     });
   }
 
     Future<void> getExtendItem() async {
-    setState(() {
-      appStore.setLoading(true);
-    });
 
     listRequestEx.clear();
     var count = 0;
@@ -81,6 +79,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
           listRequestEx.add(element.request!);
           listRequestEx[count].createdAt = element.createdAt;
           listRequestEx[count].id = element.id;
+          listRequestEx[count].status = element.status;
           count++;
     });
   }
@@ -213,7 +212,19 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // setStatusBarColor(appStore.scaffoldBackground!);
+    Widget mainView = ListView(
+            shrinkWrap: true,
+            children: [
+              (widget.isExtend!) ?
+              FreeBookListComponent(listRequest: listRequestEx,isExtend: true,onCancelRequest: (id) {
+                widget.onCancelExtned!.call(id);
+                setState(() {
+                });
+              },)
+              :
+              FreeBookListComponent(listRequest: listRequest,isHistory: true,)
+            ],
+          );
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       appBar: AppBar(
@@ -231,23 +242,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
       ),
       body: Stack(
         children: [
-          ListView(
-            shrinkWrap: true,
-            children: [
-              (widget.isExtend!) ?
-              FreeBookListComponent(listRequest: listRequestEx,isExtend: true,onCancelRequest: (id) {
-                widget.onCancelExtned!.call(id);
-                setState(() {
-                  
-                });
-              },)
-              :
-              FreeBookListComponent(listRequest: listRequest,isHistory: true,)
-            ],
-          )
+          (!mIsLoading) ? mainView : appLoaderWidget.center().visible(mIsLoading),
         ],
-          
-      
       ),
     );
   }

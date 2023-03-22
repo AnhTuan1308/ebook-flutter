@@ -18,25 +18,20 @@ Future responseHandler(Response response, {req, isBookDetails = false, isPurchas
   if (isSuccessful(response.statusCode)) {
     if (response.body.contains("jwt_auth_no_auth_header")) {
       log("step1 here");
-      // toastLong("Authorization header not found.");
       throw 'Authorization header not found.';
     } else if (response.body.contains("jwt_auth_invalid_token")) {
       // var password = getStringAsync(PASSWORD);
       var email = appStore.userEmail;
-
       if (email != "" && appStore.password != "") {
         var request = {"username": email, "password": appStore.password};
         await isNetworkAvailable().then((bool) async {
           if (bool) {
-            await getLoginUserRestApi(request).then((res) async {
+            await getVietJetLoginUserRestApi(request).then((res) async {
               LoginResponse response = LoginResponse.fromJson(res);
-
               await appStore.setToken(response.token!);
               await appStore.setLoggedIn(true);
-
               await appStore.setUserId(response.userId!);
               await appStore.setTokenExpired(true);
-
               // Call Existing api
               if (isBookDetails) {
                 getBookDetailsRestApi(req);
@@ -100,7 +95,15 @@ Future responseHandler(Response response, {req, isBookDetails = false, isPurchas
         throw 'Forbidden';
       }
     } else if (response.statusCode == 401) {
-      
+      if (appStore.isLoggedIn){
+        var realrequest = {"username": "adminlib", "password": "password123@"};
+          await getVietJetLoginUserRestApi(realrequest).then((value)async {
+          LoginResponseData loginResponseData = LoginResponseData.fromJson(value);
+          LoginData data = loginResponseData.data!;
+          await appStore.setVietJetVolToken(data.volToken!);
+          }).catchError((onError) {
+  });
+    }
       // toast("Error: Unauthorized");
       throw 'Unauthorized';
     } else if (response.statusCode == 400) {
@@ -216,7 +219,7 @@ Future getVietJetAuthorBookListRestApi(id) async {
 }
 
 Future getVietJetAllBookRestApi() async {
-  return responseHandler(await VietJetAPICall().getMethod("api/books?OrderBy=publishYear%20desc"));
+  return responseHandler(await VietJetAPICall().getMethod("api/books?OrderBy=publishYear%20desc&Include=Authors"));
 }
 
 Future getVietJetAllBookRestApiByCategori(id) async {
@@ -289,6 +292,9 @@ Future getPaidBookFileListRestApi(request) async {
 
 Future getAuthorListRestApi(page, perPage) async {
   return await responseHandler(await VietJetAPICall().getMethod("api/authors?PageNumber=$page&MaxPageSize=$perPage"));
+}
+Future getDepartmentListRestApi() async {
+  return await responseHandler(await VietJetAPICall().getMethod("api/departments/all"));
 }
 
 /*

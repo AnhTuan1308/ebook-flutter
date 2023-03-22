@@ -232,15 +232,17 @@ class PurchaseBookItemComponentState extends State<PurchaseBookItemComponent> {
                       break;
                   }
             },
-                        dropdownStyleData: DropdownStyleData(
+              dropdownStyleData: DropdownStyleData(
+              
               width: 120,
               padding: const EdgeInsets.symmetric(vertical: 6),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: Colors.green,
+                color: Colors.white,
               ),
               elevation: 8,
-              offset: const Offset(0, 8),
+              offset: const Offset(-85, 0),
+
             ),
     )
               ).center(widthFactor: 2.5,heightFactor: 2.5),
@@ -271,14 +273,14 @@ class MenuItems {
     return Container(
       child: Row(
         children: [
-          Icon(item.icon, color: Colors.white, size: 22),
+          Icon(item.icon, color: Colors.black, size: 22),
           const SizedBox(
             width: 10,
           ),
           Text(
             item.text,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ],

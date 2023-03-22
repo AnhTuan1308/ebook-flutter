@@ -307,17 +307,14 @@ class _MyLibraryViewState extends State<MyLibraryView> {
                       MyCartScreen(isExtend: true,
                                     onCancelExtned: (id) {
                                       cancelRequestExtend(id);
-                                      setState(() {
-                                        
-                                      });
                                         },
                         ).launch(context);
 
                     },
-                    icon: Icon(Icons.change_circle, color: Colors.white,size: 35,),
+                    icon: Icon(Icons.change_circle, color: Colors.white,size: 33,),
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 10),
+                    margin: EdgeInsets.only(right: 3),
                     decoration: boxDecorationWithRoundedCorners(boxShape: BoxShape.circle, backgroundColor: redColor),
                     child: Text(
                       listExtendRequest.length.toString(),
@@ -331,9 +328,6 @@ class _MyLibraryViewState extends State<MyLibraryView> {
                   MyCartScreen(isExtend: true,
                         onCancelExtned: (id) {
                             cancelRequestExtend(id);
-                            setState(() {
-                              
-                            });
                         },
                         ).launch(context);
                 }

@@ -93,7 +93,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await appStore.setUserId(res['user_id']);
       await appStore.setUserEmail(res['user_email']);
       await appStore.setAvatar(res['avatar']);
-
       if (res['book_profile_image'] != null) {
         appStore.setProfileImage(res['book_profile_image']);
       }

@@ -5,6 +5,8 @@ import 'package:flutterapp/app_localizations.dart';
 import 'package:flutterapp/model/BookmarkResponse.dart';
 import 'package:flutterapp/model/DashboardResponse.dart';
 import 'package:flutterapp/network/rest_api_call.dart';
+import 'package:flutterapp/screens/error_view_screeen.dart';
+import 'package:flutterapp/screens/sign_in_screen.dart';
 import 'package:flutterapp/utils/constant.dart';
 import 'package:flutterapp/utils/SelectedAnimationType.dart';
 import 'package:flutterapp/utils/app_widget.dart';
@@ -46,6 +48,7 @@ class _MyBookMarkScreenState extends State<MyBookMarkScreen> {
           });
         }).catchError((onError) {
           setState(() {
+            mIsLoading = false;
           });
           log('error : ${onError.toString()}');
         });
@@ -57,6 +60,32 @@ class _MyBookMarkScreenState extends State<MyBookMarkScreen> {
       }
     });
   }
+
+    Future removeFromBookmark(id) async {
+    if (!appStore.isLoggedIn) {
+      SignInScreen().launch(context);
+      return;
+    }
+    await isNetworkAvailable().then((bool) async {
+      if (bool) {
+        await getRemoveFromBookmarkRestApi(id)
+        .then((res) async {
+          setState(() {
+            getBookmarkBooks();
+          });
+        })
+        .catchError((onError) {
+          log(onError.toString());
+          ErrorViewScreen(
+            message: onError.toString(),
+          ).launch(context);
+        });
+      } else {
+        NoInternetConnection().launch(context);
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +109,14 @@ class _MyBookMarkScreenState extends State<MyBookMarkScreen> {
                             child: SelectedAnimationType(
                               scale: 5,
                               curves: getIntAsync(ANIMATION_TYPE_SELECTION_INDEX) == SLIDE_ANIMATION ? Curves.decelerate : Curves.fastLinearToSlowEaseIn,
-                              child: BookMarkListComponent(mBookList[index], borderColor: borderColor).paddingOnly(top: 8, bottom: 8),
+                              child: BookMarkListComponent(
+                                        mBookList[index],
+                                        onRemoveBookmark: (id) {
+                                                    removeFromBookmark(id);
+                                                    setState(() {
+                                                    });
+                                                }, 
+                                        borderColor: borderColor).paddingOnly(top: 8, bottom: 8),
                             ),
                           ),
                           onTap: () async {
