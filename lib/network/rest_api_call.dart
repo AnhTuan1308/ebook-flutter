@@ -27,12 +27,12 @@ Future responseHandler(Response response, {req, isBookDetails = false, isPurchas
         await isNetworkAvailable().then((bool) async {
           if (bool) {
             await getVietJetLoginUserRestApi(request).then((res) async {
-              LoginResponse response = LoginResponse.fromJson(res);
-              await appStore.setToken(response.token!);
+              LoginResponseData response = LoginResponseData.fromJson(res);
+              // await appStore.setToken(response.token!);
+              await appStore.setVietJetVolToken(response.data!.volToken!);
+              await appStore.setVietJetVolTokenExpires(response.data!.volTokenExpires!);
               await appStore.setLoggedIn(true);
-              await appStore.setUserId(response.userId!);
-              await appStore.setTokenExpired(true);
-              // Call Existing api
+              await appStore.setVietJetUserId(response.data!.userID!);              // Call Existing api
               if (isBookDetails) {
                 getBookDetailsRestApi(req);
               } else if (isPurchasedBook) {
@@ -130,6 +130,7 @@ openSignInScreen() async {
   await appStore.setAvatar('');
   await appStore.setLoggedIn(false);
   await appStore.setProfileImage('');
+
   // TODO Globle context here
   //SignInScreen().launch(context, isNewTask: true);
 }

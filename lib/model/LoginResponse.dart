@@ -80,7 +80,7 @@ class LoginData {
   String? refreshToken;
   int? refreshTokenExpires;
   List<String>? roles;
-  List<String>? permisssions;
+  List<String>? permissions;
 
   LoginData(
       {
@@ -94,7 +94,7 @@ class LoginData {
       this.refreshToken,
       this.refreshTokenExpires,
       this.roles,
-      this.permisssions
+      this.permissions
       }
       );
 
@@ -109,7 +109,7 @@ class LoginData {
     refreshToken = json['refreshToken'];
     refreshTokenExpires = json['refreshTokenExpires'];
     roles = json['roles'] != null ? new List<String>.from(json['roles']) : null;
-    permisssions = json['permisssions'] != null ? new List<String>.from(json['permisssions']) : null;
+    permissions = json['permisssions'] != null ? new List<String>.from(json['permisssions']) : null;
 
   }
 
@@ -124,7 +124,7 @@ class LoginData {
     data['refreshToken'] = this.refreshToken;
     data['refreshTokenExpires'] = this.refreshTokenExpires;
     data['roles'] = this.roles;
-    data['permisssions'] = this.permisssions;
+    data['permisssions'] = this.permissions;
     return data;
   }
 }

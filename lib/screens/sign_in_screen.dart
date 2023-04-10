@@ -97,7 +97,7 @@ class _SignInScreenState extends State<SignInScreen> {
           await appStore.setVietJetRefreshToken(data.refreshToken!);
           await appStore.setVietJetRefreshTokenExpires(data.refreshTokenExpires!);
           await appStore.setVietJetRoles(data.roles!);
-          await appStore.setVietJetPermisssions(data.permisssions!);
+          await appStore.setVietJetPermisssions(data.permissions!);
         // });
         // Real Login
           setValue(REMEMBER_PASSWORD, isRemember!);

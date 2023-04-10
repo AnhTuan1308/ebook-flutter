@@ -325,14 +325,15 @@ class _MyLibraryViewState extends State<MyLibraryView> {
               ),
               onPressed: () async {
                 if (appStore.isLoggedIn) {
-                  MyCartScreen(isExtend: true,
+                  MyCartScreen(isExtend: true, 
                         onCancelExtned: (id) {
                             cancelRequestExtend(id);
                         },
                         ).launch(context);
                 }
               },
-            ).visible(appStore.isLoggedIn),
+            ).visible(appStore.isLoggedIn)
+            ,
           backgroundColor: appStore.scaffoldBackground,
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(90.0),
